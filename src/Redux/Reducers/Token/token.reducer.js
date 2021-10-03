@@ -3,7 +3,7 @@ const token = ""
 export const tokenReducer = (state = token, action) => {
   switch (action.type) {
     case "SET_TOKEN":
-      return state = action.payload
+      return state = `Bearer ${action.payload}`
 
     default:
       return state;
