@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #353535;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.form {
+  max-width: 330px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  margin-top: 15%;
+}
+
+.form .form__custom-button {
+  margin-top: 50px;
+}
+
+.link {
+  color: red;
+  font-size: 15px;
+}
