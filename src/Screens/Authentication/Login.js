@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
-import "./styles.css";
 import CustomInput from "../../Components/CustomInput";
+import "./styles.css";
 import { Button } from "@material-ui/core";
 import { AuthContext } from "../../Utils/authContext";
-import { useHistory, useLocation } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 const LoginScreen = ({ title }) => {
   const [email, setEmail] = useState('')
@@ -12,14 +11,15 @@ const LoginScreen = ({ title }) => {
 
   const history = useHistory();
   const location = useLocation();
+  const { from } = location.state || { from: { pathname: "/" } };
 
   const auth = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
-      const { from } = location?.state || { from: { pathname: "/" } };
+      debugger
       await auth.login({ email, password })
-      history.push(from)
+      history.replace(from);
     } catch (error) {
       console.warn(error);
     }

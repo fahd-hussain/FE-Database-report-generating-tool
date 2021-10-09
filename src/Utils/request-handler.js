@@ -1,21 +1,21 @@
 const axios = require('axios');
-const APP_BASE_URI = 'http://192.168.0.106:4000';
+const APP_BASE_URI = 'http://192.168.0.111:4000';
 
-export const PostRequest = ({ url, body }) => {
+export const PostRequest = async ({ url, body }) => {
   try {
     const uri = `${APP_BASE_URI}/${url}`;
-    const response = axios.post(uri, body);
-    return response;
+    const response = await axios.post(uri, body);
+    if (response.data) return response.data;
   } catch (error) {
     throw error
   }
 }
 
-export const PostRequestWithToken = async ({ url, data }) => {
+export const PostRequestWithToken = async ({ url, body }) => {
   try {
     const uri = `${APP_BASE_URI}/${url}`;
-    const response = await axios.post(uri, { data });
-    return response;
+    const response = await axios.post(uri, body);
+    if (response.data) return response.data;
   } catch (error) {
     throw error
   }
@@ -25,7 +25,7 @@ export const GetRequestWithToken = async ({ url }) => {
   try {
     const uri = `${APP_BASE_URI}/${url}`;
     const response = await axios.get(uri);
-    return response;
+    if (response.data) return response.data;
   } catch (error) {
     throw error
   }

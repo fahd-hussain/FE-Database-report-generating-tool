@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,78 +6,32 @@ import {
   Redirect,
 } from "react-router-dom";
 import { AuthContext } from "./Utils/authContext";
-import { PostRequest } from "./Utils/request-handler";
-import LoginScreen from "./Screens/Authentication/Login";
-import RegisterScreen from "./Screens/Authentication/Register";
-import axios from "axios";
 
-export default function AuthExample() {
+const AuthProvider = lazy(() => import('./Utils/authProvider'))
+const LoginScreen = lazy(() => import('./Screens/Authentication/Login'))
+const RegisterScreen = lazy(() => import('./Screens/Authentication/Register'))
+const DashboardScreen = lazy(() => import('./Screens/Application/Dashboard'))
+
+export default function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Switch>
-          <Route path="/register">
-            <RegisterScreen />
-          </Route>
-          <Route path="/login">
-            <LoginScreen />
-          </Route>
-          <ApplicationRoute path="/">
-            <div>Hello</div>
-          </ApplicationRoute>
-        </Switch>
-      </Router>
-    </AuthProvider>
+    <Suspense fallback={<div>Loading....</div>}>
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route path="/register">
+              <RegisterScreen />
+            </Route>
+            <Route path="/login">
+              <LoginScreen />
+            </Route>
+            <ApplicationRoute path="/">
+              <DashboardScreen />
+            </ApplicationRoute>
+          </Switch>
+        </Router>
+      </AuthProvider>
+    </Suspense>
   );
-}
-
-function AuthProvider({ children }) {
-  const auth = useProvideAuth();
-
-  return (
-    <AuthContext.Provider value={auth}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
-
-function useProvideAuth() {
-  const [token, setToken] = useState(null);
-
-  const login = async (body) => {
-    try {
-      const resp = await PostRequest({ url: 'auth/login', body })
-      if (resp?.data) {
-        setToken(resp?.data?.token)
-        axios.defaults.headers.common['Authorization'] = resp?.data?.token;
-      }
-    } catch (error) {
-      setToken(null)
-      throw error
-    }
-  };
-
-  const register = async (body) => {
-    try {
-      const resp = await PostRequest({ url: 'auth/register', body })
-      if (resp?.data) {
-        setToken(resp?.data?.token)
-        axios.defaults.headers.common['Authorization'] = resp?.data?.token;
-      }
-    } catch (error) {
-      setToken(null)
-      throw error
-    }
-  };
-
-  const logout = () => setToken(null)
-
-  return {
-    token,
-    login,
-    register,
-    logout
-  };
 }
 
 const ApplicationRoute = ({ children, ...rest }) => {
