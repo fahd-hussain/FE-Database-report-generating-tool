@@ -13,7 +13,7 @@ import styles from "../../Assets/jss/customInputStyle";
 
 const useStyles = makeStyles(styles);
 
-export default function CustomInput({
+const CustomInput = ({
   formControlProps,
   labelText,
   id,
@@ -25,7 +25,7 @@ export default function CustomInput({
   success,
   handleChange,
   type,
-}) {
+}) => {
   const classes = useStyles();
 
   const labelClasses = classNames({
@@ -92,3 +92,5 @@ CustomInput.propTypes = {
   success: PropTypes.bool,
   white: PropTypes.bool
 };
+
+export default CustomInput

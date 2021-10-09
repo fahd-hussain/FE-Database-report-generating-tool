@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux'
-import { tokenReducer } from './Token/token.reducer'
+import { databaseReducer } from './Database/database.reducer'
 
-export default combineReducers({ token: tokenReducer})
+export default combineReducers({ database: databaseReducer })
