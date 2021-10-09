@@ -17,7 +17,6 @@ const LoginScreen = ({ title }) => {
 
   const handleLogin = async () => {
     try {
-      debugger
       await auth.login({ email, password })
       history.replace(from);
     } catch (error) {
