@@ -1,5 +1,5 @@
 const axios = require('axios');
-const APP_BASE_URI = 'http://192.168.0.111:4000';
+const APP_BASE_URI = 'http://192.168.0.108:4000';
 
 export const PostRequest = async ({ url, body }) => {
   try {
