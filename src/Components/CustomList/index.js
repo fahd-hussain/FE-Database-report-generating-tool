@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles(styles);
 
-const CustomList = ({ data = []}) => {
+const CustomList = ({ data = [], handleClickDatabase }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -45,7 +45,7 @@ const CustomList = ({ data = []}) => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {data.map(value => (
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => handleClickDatabase(value)}>
               <ListItemIcon>
                 <Storage />
               </ListItemIcon>
@@ -65,7 +65,8 @@ const CustomList = ({ data = []}) => {
 }
 
 CustomList.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  handleClickDatabase: PropTypes.func
 };
 
 export default CustomList
