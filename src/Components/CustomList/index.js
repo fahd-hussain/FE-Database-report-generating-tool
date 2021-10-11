@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 
 const useStyles = makeStyles(styles);
 
-const CustomList = ({ data = [], handleClickDatabase }) => {
+const CustomList = ({ data = [], handleClickDatabase, handleLogout }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -54,7 +54,7 @@ const CustomList = ({ data = [], handleClickDatabase }) => {
           ))}
         </List>
       </Collapse>
-      <ListItem button >
+      <ListItem button onClick={handleLogout}>
         <ListItemIcon>
           <ExitToApp />
         </ListItemIcon>
