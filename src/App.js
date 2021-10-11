@@ -41,7 +41,7 @@ const ApplicationRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        auth.token ? (
+        auth.authenticated ? (
           children
         ) : (
           <Redirect

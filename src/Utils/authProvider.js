@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { AuthContext } from "./authContext";
 import { PostRequest } from "./request-handler";
 
@@ -15,14 +16,15 @@ const AuthProvider = ({ children }) => {
 const useAuthProvider = () => {
   const token = localStorage.getItem('token');
   axios.defaults.headers.common['Authorization'] = token;
+  const [authenticated, setAuthenticated] = useState(false)
 
   const login = async (body) => {
     try {
       const resp = await PostRequest({ url: 'auth/login', body })
       localStorage.setItem('token', `Bearer ${resp?.token}`)
+      setAuthenticated(true)
       return
     } catch (error) {
-      localStorage.removeItem('token');
       throw error;
     }
   };
@@ -31,17 +33,20 @@ const useAuthProvider = () => {
     try {
       const resp = await PostRequest({ url: 'auth/register', body })
       localStorage.setItem('token', `Bearer ${resp?.token}`)
+      setAuthenticated(true)
       return
     } catch (error) {
-      localStorage.removeItem('token');
       throw error;
     }
   };
 
-  const logout = () => localStorage.removeItem('token');
+  const logout = () => {
+    localStorage.removeItem('token');
+    setAuthenticated(false)
+  }
 
   return {
-    token,
+    authenticated,
     login,
     register,
     logout
